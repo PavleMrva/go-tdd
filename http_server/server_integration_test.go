@@ -8,7 +8,9 @@ import (
 
 func TestRecordingWinsAndRetrievingThem(t *testing.T) {
 	//server_integration_test.go
-	store := NewInMemoryPlayerStore()
+	database, cleanDatabase := createTempFile(t, `[]`)
+	defer cleanDatabase()
+	store, _ := NewFileSystemPlayerStore(database)
 	server := NewPlayerServer(store)
 	player := "Pepper"
 
